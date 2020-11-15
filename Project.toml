@@ -2,3 +2,7 @@ name = "Ledger"
 uuid = "a0e87265-8bf7-4e6d-acdc-a6c46875c2ca"
 authors = ["mgarbiso <markus.a.garbiso@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
