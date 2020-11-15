@@ -1,0 +1,4 @@
+name = "Ledger"
+uuid = "a0e87265-8bf7-4e6d-acdc-a6c46875c2ca"
+authors = ["mgarbiso <markus.a.garbiso@gmail.com>"]
+version = "0.1.0"
