@@ -4,7 +4,7 @@ module Ledger
 # make_transaction (for expenses and incomes)
 # modify_accounts add account, delete account, default account
 
-#Read
+#Read read_net
 # Display Current Net
 # Display Curent Avaialable/Expected
 # Display Unallocated funds, funds with no category.
