@@ -2,14 +2,24 @@ module Ledger
 
 using Dates
 
-"""`LedgerModification` is an `abstract type` that encompasses all the modifications on can do to a ledger."""
-abstract type LedgerModification end
+"""`LedgerEntry` is an `abstract type` that encompasses all the modifications on can do to a ledger."""
+abstract type LedgerEntry end
 
-struct Transcation<:LedgerModification
+struct Transaction<:LedgerEntry
     amount::Real
     account::String
     date::Union{Date,DateTime}
     tags::Dict{String,String}
+end
+
+
+function new_ledger()
+    LedgerEntry[]
+end
+
+
+function add_transaction!(ledger::Array{LedgerEntry,1}, mods::Transaction ...)
+    push!(ledger, mods...)
 end
 
 # Transactions
@@ -32,5 +42,6 @@ end
 # Import
 # csv
 
+export Transaction, new_ledger, add_transaction!, LedgerEntry
 
 end # module
