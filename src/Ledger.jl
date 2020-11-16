@@ -1,3 +1,6 @@
+"""`Ledger` is a module that provides a system of budgeting centered around a "ledger", 
+    which is an array of `LedgerEntry` `struct`. `Ledger` entry structs represets things
+    like transactions, adding/removing accounts, etc."""
 module Ledger
 
 using Dates
@@ -5,6 +8,8 @@ using Dates
 """`LedgerEntry` is an `abstract type` that encompasses all the modifications on can do to a ledger."""
 abstract type LedgerEntry end
 
+"""`Transaction(amount::Real, account::String, date::::Union{Date,DateTime}, tags::Dict{String,String})` 
+    records the flow of money from or to a ledger."""
 struct Transaction<:LedgerEntry
     amount::Real
     account::String
@@ -12,20 +17,27 @@ struct Transaction<:LedgerEntry
     tags::Dict{String,String}
 end
 
+"""`AddAccount(account::String, date::::Union{Date,DateTime})` 
+    records the addition of an account."""
 struct AddAccount<:LedgerEntry
     account::String
     date::Union{Date,DateTime}
 end
 
+"""`RemoveAccount(account::String, date::::Union{Date,DateTime})` 
+    records the deletion of an account from a ledger."""
 struct RemoveAccount<:LedgerEntry
     account::String
     date::Union{Date,DateTime}
 end
 
+"""`new_ledger()` creates an empty ledger, `LedgerEntry[]`"""
 function new_ledger()
     LedgerEntry[]
 end
 
+"""`add_transaction!(ledger::Array{LedgerEntry,1}, transaction::Transaction)` 
+    adds a `transaction`, to `ledger`, if ledger has `transaction.account`."""
 function add_transaction!(ledger::Array{LedgerEntry,1}, transaction::Transaction)
 
     if has_account(ledger, transaction.account)
@@ -36,6 +48,8 @@ function add_transaction!(ledger::Array{LedgerEntry,1}, transaction::Transaction
 
 end
 
+"""`add_account!(ledger::Array{LedgerEntry,1}, account::String; date = today())` 
+    adds an account to ledger."""
 function add_account!(ledger::Array{LedgerEntry,1}, account::String; date = today())
 
     if has_account(ledger, account)
@@ -46,6 +60,9 @@ function add_account!(ledger::Array{LedgerEntry,1}, account::String; date = toda
 
 end
 
+
+"""`remove_account!(ledger::Array{LedgerEntry,1}, account::String; date = today())` 
+    removes an account from ledger."""
 function remove_account!(ledger::Array{LedgerEntry,1}, account::String; date = today())
 
     if has_account(ledger, account)
@@ -56,6 +73,9 @@ function remove_account!(ledger::Array{LedgerEntry,1}, account::String; date = t
 
 end
 
+
+"""`has_account(ledger::Array{LedgerEntry,1}, account::String)` 
+    checks if `ledger` has `acount` added"""
 function has_account(ledger::Array{LedgerEntry,1}, account::String)
     account_exist = false
 
