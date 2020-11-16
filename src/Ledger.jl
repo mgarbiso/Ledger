@@ -71,9 +71,6 @@ function has_account(ledger::Array{LedgerEntry,1}, account::String)
 end
 
 # Transactions
-# add_transaction! (for expenses and incomes)
-# remove_account! add account, delete account
-# add_account! add account, delete add_account
 # set_default_account! default account
 
 #Read read_net
