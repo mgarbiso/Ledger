@@ -18,6 +18,10 @@ for i in 1:10
     add_transaction!(ledger, Transaction(rand(-10:10), rand(account_names), today(), Dict()))
 end
 
-for account in account_names
-    remove_account!(ledger, account)
-end
+remove_account!(ledger, rand(account_names))
+
+#for account in account_names
+#    remove_account!(ledger, account)
+#end
+
+process_ledger(ledger)

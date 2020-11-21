@@ -43,7 +43,7 @@ function add_transaction!(ledger::Array{LedgerEntry,1}, transaction::Transaction
     if has_account(ledger, transaction.account)
         push!(ledger, transaction)
     else
-        println("The transaction, $(transaction), was not added to the ledger.")
+        println("The transaction, $(transaction.amount), was not added to the ledger, because the account, $(transaction.account), is not in the ledger.")
     end
 
 end
@@ -90,6 +90,41 @@ function has_account(ledger::Array{LedgerEntry,1}, account::String)
     return account_exist
 end
 
+function process_ledger(ledger::Array{LedgerEntry,1}; filter = true)
+
+    tally = Dict{String, Any}()
+
+    for ledger_entry in ledger
+        if filter
+           # println(ledger_entry)
+           process_ledger_entry!(tally, ledger_entry)
+        end
+    end
+    tally
+end
+
+function process_ledger_entry!(tally, ledger_entry::LedgerEntry)
+    println(ledger_entry)
+end
+
+function process_ledger_entry!(tally, ledger_entry::Transaction)
+    tally[ledger_entry.account] += ledger_entry.amount 
+end
+
+function process_ledger_entry!(tally, ledger_entry::AddAccount)
+    tally[ledger_entry.account] = 0
+end
+
+function process_ledger_entry!(tally, ledger_entry::RemoveAccount)
+    if tally[ledger_entry.account] != 0
+        if haskey(tally, "")
+            tally[""] += tally[ledger_entry.account]
+        else
+            tally[""] = tally[ledger_entry.account]
+        end
+    end
+    delete!(tally, ledger_entry.account) 
+end
 # Transactions
 # set_default_account! default account
 
@@ -107,6 +142,6 @@ end
 # Import
 # csv
 
-export new_ledger, add_transaction!, add_account!, remove_account!, LedgerEntry, AddAccount, RemoveAccount, Transaction
+export new_ledger, add_transaction!, add_account!, remove_account!, LedgerEntry, AddAccount, RemoveAccount, Transaction, process_ledger
 
 end # module
